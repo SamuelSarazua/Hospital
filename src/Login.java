@@ -1,50 +1,97 @@
+import personalMedico.DoctorGeneral;
+import DATA.bdDoctores;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Login extends JFrame {
-    public Login() {
+        public Login() {
 
-            this.setSize(1600, 1000);
-            this.setLocationRelativeTo(null);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al cerrar la ventana
+                //CONFIGURACIÓN DE LA VENTANA
+                this.setSize(1600, 1000);
+                this.setLocationRelativeTo(null);
+                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al cerrar la ventana
 
-            JPanel mainPanel = new JPanel(new GridLayout(1, 2));
+                // Estilo de la interfaz
+                UIManager.put("Label.font", new Font("Arial", Font.BOLD, 22));
+                UIManager.put("Button.font", new Font("Arial", Font.BOLD, 20));
+                UIManager.put("TextField.font", new Font("Arial", Font.PLAIN, 20));
+                UIManager.put("TextArea.font", new Font("Arial", Font.PLAIN, 20));
+                UIManager.put("List.font", new Font("Arial", Font.PLAIN, 20));
+
+                //PANEL INICIAL
+                JPanel mainPanel = new JPanel(new GridLayout(1, 2));
+
+                //PANEL DEL BANNER
+                JPanel panel1 = new JPanel(new GridBagLayout());
+
+                ImageIcon urlImg = new ImageIcon(getClass().getResource("img/logo3.jpg"));
+                JLabel img = new JLabel();
+                img.setIcon(urlImg);
+
+                panel1.add(img);
+
+                //SEGUNDO PANEL
+                JPanel panel2 = new JPanel(new GridBagLayout());
+
+                //RESTRICCIONES
+                GridBagConstraints restricciones = new GridBagConstraints();
+                restricciones.gridx = 0;
+                restricciones.gridy = 0;
+                restricciones.insets = new Insets(12, 12, 12, 12); // Espacio entre componentes
+
+                JLabel correoLabel = new JLabel("Usuario:");
+                panel2.add(correoLabel, restricciones);
+
+                restricciones.gridx = 0;
+                restricciones.gridy = 1;
+                JTextField usuario = new JTextField();
+                usuario.setPreferredSize(new Dimension(350, 40));
+                panel2.add(usuario, restricciones);
+
+                restricciones.gridx = 0;
+                restricciones.gridy = 2;
+                JLabel contraLabel = new JLabel("Contraseña:");
+                panel2.add(contraLabel, restricciones);
+
+                restricciones.gridx = 0;
+                restricciones.gridy = 3;
+                JPasswordField contra = new JPasswordField();
+                contra.setPreferredSize(new Dimension(350, 40));
+                panel2.add(contra, restricciones);
+
+                restricciones.gridx = 0;
+                restricciones.gridy = 4;
+                JButton boton = new JButton("Iniciar Sesión");
+                boton.setBackground(new Color(231, 108, 16));
+                boton.setForeground(new Color(12, 73, 3));
+                panel2.add(boton, restricciones);
+
+                boton.addActionListener(e -> {
+                        ArrayList<DoctorGeneral> dataDoctores = bdDoctores.ListaDoctores();
+
+                        for (DoctorGeneral cadaDoctor : dataDoctores){
+                                if (cadaDoctor.getCorreo().equalsIgnoreCase(usuario.getText())){
+                                        if (cadaDoctor.getContra().equalsIgnoreCase(contra.getText())){
+                                                DoctorGeneral a = new DoctorGeneral();
+                                        }
+                                }else{
+                                        JLabel msgError = new JLabel("Correo no encontrado");
+                                        msgError.setForeground(Color.RED);
+                                        mainPanel.add(msgError);
+                                }
+                        }
 
 
-            JPanel panel1 = new JPanel();
+                        mainPanel.revalidate();
+                        mainPanel.repaint();
+                });
 
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(null); // Layout manual para personalizar la posición de los componentes
+                mainPanel.add(panel1);
+                mainPanel.add(panel2);
 
-            JLabel correoLabel = new JLabel("Correo:");
-            correoLabel.setBounds(100, 368, 500, 30);
-            panel2.add(correoLabel);
-
-            JTextField correo = new JTextField();
-            correo.setBounds(100, 390, 500, 30);
-            panel2.add(correo);
-
-            JLabel contraLabel = new JLabel("Contraseña:");
-            contraLabel.setBounds(100, 437, 500, 30);
-            panel2.add(contraLabel);
-
-            JTextField contra = new JTextField();
-            contra.setBounds(100, 460, 500, 30);
-            panel2.add(contra);
-
-            JButton boton = new JButton("Inicia Seción");
-            boton.setBounds(400,530,200,50);
-            panel2.add(boton);
-
-            mainPanel.add(panel1);
-            mainPanel.add(panel2);
-
-            this.add(mainPanel);
-            this.setVisible(true);
+                this.add(mainPanel);
+                this.setVisible(true);
         }
-    }
-
-
-
-
-
+}
