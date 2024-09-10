@@ -1,9 +1,9 @@
-import personalMedico.DoctorGeneral;
+import Hospital.view.LoginView;
 
 public class Main{
     public static void main(String[] args){
-        Login login = new Login();
-       // DoctorGeneral doctorGeneral = new DoctorGeneral();
+        LoginView login = new LoginView();
+        //DoctorGeneral doctorGeneral = new DoctorGeneral();
     }
 
 }
