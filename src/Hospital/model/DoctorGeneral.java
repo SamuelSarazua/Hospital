@@ -1,4 +1,4 @@
-package personalMedico;
+package Hospital.model;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

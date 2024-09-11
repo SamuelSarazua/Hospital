@@ -1,8 +1,7 @@
-package DATA;
+package Hospital.Service;
 
-import personalMedico.DoctorGeneral;
+import Hospital.model.DoctorGeneral;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class bdDoctores {

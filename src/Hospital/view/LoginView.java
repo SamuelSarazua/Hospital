@@ -1,12 +1,14 @@
-import personalMedico.DoctorGeneral;
-import DATA.bdDoctores;
+package Hospital.view;
+
+import Hospital.model.DoctorGeneral;
+import Hospital.Service.bdDoctores;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Login extends JFrame {
-        public Login() {
+public class LoginView extends JFrame {
+        public LoginView() {
 
                 //CONFIGURACIÓN DE LA VENTANA
                 this.setSize(1600, 1000);
@@ -26,7 +28,7 @@ public class Login extends JFrame {
                 //PANEL DEL BANNER
                 JPanel panel1 = new JPanel(new GridBagLayout());
 
-                ImageIcon urlImg = new ImageIcon(getClass().getResource("img/logo3.jpg"));
+                ImageIcon urlImg = new ImageIcon(getClass().getResource("resources/logo3.jpg"));
                 JLabel img = new JLabel();
                 img.setIcon(urlImg);
 
