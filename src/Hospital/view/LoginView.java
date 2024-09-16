@@ -1,13 +1,17 @@
 package Hospital.view;
 
-import Hospital.model.DoctorGeneral;
-import Hospital.Service.bdDoctores;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
 
 public class LoginView extends JFrame {
+
+        //OBJETOS GLOBALES
+        private JTextField usuario ;
+        private JPasswordField contra ;
+        private JButton boton;
+
         public LoginView() {
 
                 //CONFIGURACIÓN DE LA VENTANA
@@ -40,7 +44,7 @@ public class LoginView extends JFrame {
                 restricciones.gridx = 0;
                 restricciones.gridy = 1;
 
-                JTextField usuario = new JTextField();
+                usuario = new JTextField();
                 restricciones.gridx = 1;
                 restricciones.gridy = 0;
                 usuario.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK)); // Líneas inferiores negras
@@ -54,41 +58,34 @@ public class LoginView extends JFrame {
 
                 restricciones.gridx = 1;
                 restricciones.gridy = 2;
-                JPasswordField contra = new JPasswordField();
+                contra = new JPasswordField();
                 contra.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK)); // Líneas inferiores negras
                 contra.setPreferredSize(new Dimension(150, 30));
                 panel2.add(contra, restricciones);
 
                 restricciones.gridx = 1;
                 restricciones.gridy = 4;
-                JButton boton = new JButton("Iniciar Sesión");
+                boton = new JButton("Iniciar Sesión");
                 boton.setBackground(new Color(116, 116, 116));
                 boton.setForeground(new Color(255, 255, 255));
                 panel2.add(boton, restricciones);
 
-                boton.addActionListener(e -> {
-                        ArrayList<DoctorGeneral> dataDoctores = bdDoctores.ListaDoctores();
-
-                        for (DoctorGeneral cadaDoctor : dataDoctores){
-                                if (cadaDoctor.getCorreo().equalsIgnoreCase(usuario.getText())){
-                                        if (cadaDoctor.getContra().equalsIgnoreCase(contra.getText())){
-                                                DoctorGeneral a = new DoctorGeneral();
-                                        }
-                                }else{
-                                        //JLabel msgError = new JLabel("Correo no encontrado");
-                                        //msgError.setForeground(Color.RED);
-                                        //mainPanel.add(msgError);
-                                }
-                        }
-
-
-                        mainPanel.revalidate();
-                        mainPanel.repaint();
-                });
 
                 mainPanel.add(panel2);
 
                 this.add(mainPanel);
                 this.setVisible(true);
         }
+
+        public String getCOrreo() {
+                return usuario.getText();
+        }
+
+        public String getContra() {
+                return new String(contra.getPassword());
+        }
+
+        public void addLoginListener(ActionListener Listener) {
+                boton.addActionListener(Listener);        }
+
 }
