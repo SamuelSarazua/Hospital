@@ -111,14 +111,14 @@ public class DoctorGeneral extends JFrame {
 
     private String nombre;
     private String especialidad;
-    private int edad;
-    private int telefono;
+    private String edad;
+    private String telefono;
     private String correo;
     private String contra;
 
 
     //Metodo Constructor
-    public DoctorGeneral(String nombre, String especialidad, int edad, int telefono, String correo, String contra){
+    public DoctorGeneral(String nombre, String especialidad, String edad, String telefono, String correo, String contra){
         this.nombre = nombre;
         this.especialidad = especialidad;
         this.edad = edad;
@@ -136,11 +136,11 @@ public class DoctorGeneral extends JFrame {
         return this.especialidad;
     }
 
-    public int getEdad() {
+    public String getEdad() {
         return this.edad;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -161,11 +161,11 @@ public class DoctorGeneral extends JFrame {
         this.especialidad = apellido;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(String edad) {
         this.edad = edad;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
