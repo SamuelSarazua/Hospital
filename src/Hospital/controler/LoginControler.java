@@ -27,17 +27,8 @@ public class LoginControler {
         if (resultado.containsKey("Error")) {
             System.out.println(resultado.get("Error"));
         } else {
-            // Si la validación es exitosa, cerrar la ventana de LoginView
             loginView.dispose();
-
-            String nombreDoctor = resultado.get("Nombre");
-            String especialidadDoctor = resultado.get("Especialidad");
-
-            HashMap<String, String> doctorInfo = new HashMap<>();
-            doctorInfo.put("Nombre", nombreDoctor);
-            doctorInfo.put("Especialidad", especialidadDoctor);
-
-            new DoctorView(doctorInfo);
+            new DoctorView(resultado);
         }
     }
 }
