@@ -2,13 +2,14 @@ package Hospital.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 
 public class DoctorView extends JFrame {
 
     // Array que almacena la resolución de pantalla
-    private final int[] pantall = {1300, 800};
+    private int[] pantall = {1300, 800};
 
-    public DoctorView() {
+    public DoctorView(HashMap<String, String> doctorInfo) {
         this.setTitle("Perfil del doctor");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(pantall[0], pantall[1]); // Usar el array para definir las dimensiones
@@ -33,11 +34,15 @@ public class DoctorView extends JFrame {
         logoPanel.setBackground(Color.YELLOW);
         logoPanel.setPreferredSize(new Dimension(50, 50));
 
-        JLabel doctorName = new JLabel("Samuel Sarazúa");
+        // Obtén el nombre y la especialidad del HashMap
+        String nombreDoctor = doctorInfo.get("Nombre");
+        String especialidadDoctor = doctorInfo.get("Especialidad");
+
+        JLabel doctorName = new JLabel(nombreDoctor);
         doctorName.setForeground(Color.WHITE);
         doctorName.setFont(new Font("Arial", Font.BOLD, 18));
 
-        JLabel doctorSpecialty = new JLabel("Dermatólogo");
+        JLabel doctorSpecialty = new JLabel(especialidadDoctor);
         doctorSpecialty.setForeground(Color.WHITE);
         doctorSpecialty.setFont(new Font("Arial", Font.PLAIN, 14));
 
@@ -63,5 +68,4 @@ public class DoctorView extends JFrame {
 
         this.setVisible(true);
     }
-
 }
