@@ -1,20 +1,25 @@
 package Hospital.view;
 
+import Hospital.model.Pacientes;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DoctorView extends JFrame {
 
     // Array que almacena la resolución de pantalla
     private int[] pantall = {1300, 800};
+    private ArrayList<Pacientes> listaPacientes;
 
-    public DoctorView(HashMap<String, String> doctorInfo) {
+    public DoctorView(HashMap<String, String> doctorInfo, ArrayList<Pacientes> listaPacientes) {
         this.setTitle("Perfil del doctor");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(pantall[0], pantall[1]); // Usar el array para definir las dimensiones
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
+        this.listaPacientes = listaPacientes;
 
         JPanel headerPanel = new JPanel();
         headerPanel.setPreferredSize(new Dimension(pantall[0], 60));
@@ -65,41 +70,48 @@ public class DoctorView extends JFrame {
         headerPanel.add(userPanel, BorderLayout.EAST);
 
         this.add(headerPanel, BorderLayout.NORTH);
+
         add(ComponentedeMenuLateral(), BorderLayout.WEST);
+
+        PacienteView pacienteView = new PacienteView(listaPacientes);
+        JPanel panelPacientes = pacienteView.panelPaciente(listaPacientes);
+        this.add(panelPacientes, BorderLayout.CENTER);
+
+
         this.setVisible(true);
     }
 
-    private JPanel ComponentedeMenuLateral () {
+    private JPanel ComponentedeMenuLateral() {
         JPanel menuPanel = new JPanel();
-        menuPanel.setPreferredSize(new Dimension(250,pantall[1]));
+        menuPanel.setPreferredSize(new Dimension(250, pantall[1]));
         menuPanel.setBackground(Color.DARK_GRAY);
 
         JPanel menu = new JPanel();
-        menu.setLayout(new GridLayout(5,1));
+        menu.setLayout(new GridLayout(5, 1));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        menu.add(op("Opcion 1"),gbc);
-        menu.add(op("Opcion 2"),gbc);
-        menu.add(op("Opcion 3"),gbc);
-        menu.add(op("Opcion 4"),gbc);
-        menu.add(op("Opcion 5"),gbc);
+
+        menu.add(op("Consultas Del Día"), gbc);
+        menu.add(op("Salas"), gbc);
+        menu.add(op("Farmacia"), gbc);
+        menu.add(op("Pacientes registrados"), gbc);
+        menu.add(op("Citar en otra area"), gbc);
         menuPanel.add(menu);
+
 
         return menuPanel;
     }
 
-    private JButton op (String texto) {
+    private JButton op(String texto) {
         JButton op = new JButton(texto);
 
-        op.addActionListener(e ->  {
+        op.addActionListener(e -> {
             System.out.println(texto);
         });
 
         return op;
     }
-
 }
-
