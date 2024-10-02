@@ -12,11 +12,13 @@ public class DoctorView extends JFrame {
     // Array que almacena la resolución de pantalla
     private int[] pantall = {1300, 800};
     private ArrayList<Pacientes> listaPacientes;
+    private JPanel panelPacientes;
+    private JPanel salasViewPanel;
 
     public DoctorView(HashMap<String, String> doctorInfo, ArrayList<Pacientes> listaPacientes) {
         this.setTitle("Perfil del doctor");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(pantall[0], pantall[1]); // Usar el array para definir las dimensiones
+        this.setSize(pantall[0], pantall[1]);
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
         this.listaPacientes = listaPacientes;
@@ -39,7 +41,6 @@ public class DoctorView extends JFrame {
         logoPanel.setBackground(Color.YELLOW);
         logoPanel.setPreferredSize(new Dimension(50, 50));
 
-        // Obtén el nombre y la especialidad del HashMap
         String nombreDoctor = doctorInfo.get("Nombre");
         String especialidadDoctor = doctorInfo.get("Especialidad");
 
@@ -74,9 +75,10 @@ public class DoctorView extends JFrame {
         add(ComponentedeMenuLateral(), BorderLayout.WEST);
 
         PacienteView pacienteView = new PacienteView(listaPacientes);
-        JPanel panelPacientes = pacienteView.panelPaciente(listaPacientes);
+        panelPacientes = pacienteView.panelPaciente(listaPacientes);
         this.add(panelPacientes, BorderLayout.CENTER);
 
+        salasViewPanel = new SalasView();
 
         this.setVisible(true);
     }
@@ -93,14 +95,12 @@ public class DoctorView extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-
         menu.add(op("Consultas Del Día"), gbc);
         menu.add(op("Salas"), gbc);
         menu.add(op("Farmacia"), gbc);
         menu.add(op("Pacientes registrados"), gbc);
         menu.add(op("Citar en otra area"), gbc);
         menuPanel.add(menu);
-
 
         return menuPanel;
     }
@@ -110,6 +110,16 @@ public class DoctorView extends JFrame {
 
         op.addActionListener(e -> {
             System.out.println(texto);
+
+            if (texto.equals("Salas")) {
+
+                this.remove(panelPacientes);
+                this.add(salasViewPanel, BorderLayout.CENTER);
+
+                // Actualizar la ventana para reflejar los cambios
+                this.revalidate();
+                this.repaint();
+            }
         });
 
         return op;
