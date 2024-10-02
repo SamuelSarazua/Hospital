@@ -1,5 +1,7 @@
 package Hospital.controler;
 import Hospital.Service.bdPaciente;
+import Hospital.Service.bdMedicamento;
+import Hospital.model.Medicamento;
 import Hospital.model.Pacientes;
 import backEnde.BackEnde;
 import Hospital.view.DoctorView;
@@ -31,8 +33,9 @@ public class LoginControler {
             loginView.dispose();
 
             ArrayList<Pacientes> listaPacientes = bdPaciente.listaPacientes();
+            ArrayList<Medicamento> listaMedicamentos = bdMedicamento.listaMedicamentos();
 
-            new DoctorView(resultado, listaPacientes);
+            new DoctorView(resultado, listaPacientes, listaMedicamentos);
         }
     }
 }

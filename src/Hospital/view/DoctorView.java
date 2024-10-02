@@ -1,5 +1,6 @@
 package Hospital.view;
 
+import Hospital.model.Medicamento;
 import Hospital.model.Pacientes;
 
 import javax.swing.*;
@@ -14,8 +15,9 @@ public class DoctorView extends JFrame {
     private ArrayList<Pacientes> listaPacientes;
     private JPanel panelPacientes;
     private JPanel salasViewPanel;
+    private JPanel medicamentosViewPanel;
 
-    public DoctorView(HashMap<String, String> doctorInfo, ArrayList<Pacientes> listaPacientes) {
+    public DoctorView(HashMap<String, String> doctorInfo, ArrayList<Pacientes> listaPacientes, ArrayList<Medicamento> listaMedicamentos) {
         this.setTitle("Perfil del doctor");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(pantall[0], pantall[1]);
@@ -23,6 +25,7 @@ public class DoctorView extends JFrame {
         this.setLocationRelativeTo(null);
         this.listaPacientes = listaPacientes;
 
+        // Crear el header panel
         JPanel headerPanel = new JPanel();
         headerPanel.setPreferredSize(new Dimension(pantall[0], 60));
         headerPanel.setBackground(Color.DARK_GRAY);
@@ -33,10 +36,10 @@ public class DoctorView extends JFrame {
         hospitalLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         headerPanel.add(hospitalLabel, BorderLayout.WEST);
 
+        // Información del doctor
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new GridBagLayout());
         userPanel.setBackground(Color.DARK_GRAY);
-
         JPanel logoPanel = new JPanel();
         logoPanel.setBackground(Color.YELLOW);
         logoPanel.setPreferredSize(new Dimension(50, 50));
@@ -71,14 +74,16 @@ public class DoctorView extends JFrame {
         headerPanel.add(userPanel, BorderLayout.EAST);
 
         this.add(headerPanel, BorderLayout.NORTH);
-
         add(ComponentedeMenuLateral(), BorderLayout.WEST);
 
+        // Inicializar paneles
         PacienteView pacienteView = new PacienteView(listaPacientes);
         panelPacientes = pacienteView.panelPaciente(listaPacientes);
         this.add(panelPacientes, BorderLayout.CENTER);
 
-        salasViewPanel = new SalasView();
+        salasViewPanel = new SalasView(); // Inicializar el panel de salas
+        MedicamentosView medicamentosView = new MedicamentosView(listaMedicamentos);
+        medicamentosViewPanel = medicamentosView.panelMedicamentos(listaMedicamentos); // Inicializar el panel de medicamentos
 
         this.setVisible(true);
     }
@@ -91,37 +96,45 @@ public class DoctorView extends JFrame {
         JPanel menu = new JPanel();
         menu.setLayout(new GridLayout(5, 1));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
+        // Crear botones en el menú lateral
+        menu.add(op("Consultas Del Día"));
+        menu.add(op("Salas"));
+        menu.add(op("Farmacia"));
+        menu.add(op("Pacientes registrados"));
+        menu.add(op("Citar en otra área"));
 
-        menu.add(op("Consultas Del Día"), gbc);
-        menu.add(op("Salas"), gbc);
-        menu.add(op("Farmacia"), gbc);
-        menu.add(op("Pacientes registrados"), gbc);
-        menu.add(op("Citar en otra area"), gbc);
         menuPanel.add(menu);
-
         return menuPanel;
     }
 
     private JButton op(String texto) {
-        JButton op = new JButton(texto);
+        JButton button = new JButton(texto);
 
-        op.addActionListener(e -> {
+        button.addActionListener(e -> {
             System.out.println(texto);
 
-            if (texto.equals("Salas")) {
+            this.remove(panelPacientes);
 
-                this.remove(panelPacientes);
-                this.add(salasViewPanel, BorderLayout.CENTER);
+            switch (texto) {
+                case "Salas":
+                    this.remove(medicamentosViewPanel);
+                    this.add(salasViewPanel, BorderLayout.CENTER);
+                    break;
 
-                // Actualizar la ventana para reflejar los cambios
-                this.revalidate();
-                this.repaint();
+                case "Farmacia":
+                    this.remove(salasViewPanel);
+                    this.add(medicamentosViewPanel, BorderLayout.CENTER);
+                    break;
+
+                default:
+                    System.out.println("Opción no manejada");
+                    break;
             }
+
+            this.revalidate();
+            this.repaint();
         });
 
-        return op;
+        return button;
     }
 }
